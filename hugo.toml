@@ -1,0 +1,60 @@
+baseurl      = "https://ntns.in"
+title        = "Shamil K"
+languageCode = "en-us"
+theme        = "hello-friend-ng"
+paginate     = 10
+
+[params]
+  [params.author]
+    name = "Shamil K"
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04"
+  enableThemeToggle = true
+
+  [params.logo]
+    logoMark     = ">"
+    logoText     = "$ cd /home/"
+    logoHomeLink = "/"
+
+  # Subtitle for home
+  homeSubtitle = "Just whatever I feel like"
+
+  # Set disableReadOtherPosts to true in order to hide the links to other posts.
+  disableReadOtherPosts = false
+
+  # Enable sharing buttons, if you like
+  enableSharingButtons = true
+  
+  # Show a global language switcher in the navigation bar
+  enableGlobalLanguageMenu = true
+
+  # Metadata mostly used in document's head
+  description = "Shamil K's blog"
+  keywords = "homepage, blog"
+  images = [""]
+
+  [[params.social]]
+    name = "github"
+    url  = "https://github.com/necessary129"
+  [[params.social]]
+    name = "stackoverflow"
+    url  = "https://stackoverflow.com/users/6387050/noteness"
+
+
+[taxonomies]
+    category = "blog"
+    tag      = "tags"
+    series   = "series"
+
+    # or
+    #
+    # path = "/img/your-example-logo.svg"
+    # alt = "Your example logo alt text"
+
+  # And you can even create generic menu
+  [[menu.main]]
+    identifier = "blog"
+    name       = "Blog"
+    url        = "/posts"
