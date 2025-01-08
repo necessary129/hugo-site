@@ -3,12 +3,12 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/vdb";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              size = "512M";
+              size = "1G";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -17,13 +17,23 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            swap = {
+            swapluks = {
               size = "64G";
               content = {
-                type = "swap";
-                discardPolicy = "both";
-                randomEncryption = true;
-                resumeDevice = true; # resume from hiberation from this device
+                type = "luks";
+                name = "swapluks";
+                passwordFile = "/tmp/secret.key";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                  #keyFile = "/tmp/secret.key";
+                };
+                content = {
+                  size = "100%";
+                  type = "swap";
+                  discardPolicy = "both";
+                  resumeDevice = "true";
+                };
               };
             };
             luks = {
@@ -35,6 +45,7 @@
                 passwordFile = "/tmp/secret.key"; # Interactive
                 settings = {
                   allowDiscards = true;
+                  bypassWorkqueues = true;
                   #keyFile = "/tmp/secret.key";
                 };
                 #additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
@@ -42,19 +53,19 @@
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    "/root" = {
+                    "@" = {
                       mountpoint = "/";
                       mountOptions = [ "compress=zstd" "noatime" "ssd"];
                     };
-                    "/home" = {
+                    "@home" = {
                       mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" "ssd"];
                     };
-                    "/var" = {
-                      mountpoint = "/var";
+                    "@varlog" = {
+                      mountpoint = "/var/log";
                       mountOptions = [ "compress=zstd" "noatime" "ssd"];
                     }
-                    "/nix" = {
+                    "@nix" = {
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" "ssd"];
                     };
